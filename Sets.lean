@@ -7,6 +7,18 @@ def Mem {α : Type} : α → Set α → Prop := fun a X => X a
 instance {α : Type} : Membership α (Set α) where
   mem := Mem 
 
+def SetOf {α : Type} (p : α → Prop) : Set α := p
+
+declare_syntax_cat binder_construct
+syntax "{" binder_construct "|" term "}" : term
+
+syntax ident " : " term : binder_construct
+syntax ident " ∈ " term : binder_construct
+
+macro_rules
+| `({ $var:ident : $ty:term | $body:term }) => `(SetOf (fun ($var : $ty) => $body)) 
+| `({ $var:ident ∈ $s:term | $body:term }) => `(SetOf (fun $var => $var ∈ $s ∧ $body))
+
 def Subset {α : Type} (X Y : Set α) : Prop := ∀ a, a ∈ X → a ∈ Y
 infix:60 " ⊆ " => Subset
 
@@ -34,6 +46,8 @@ def BigUnion {α β : Type} (X : β → Set α) : Set α := fun a => ∃ b, a �
 def BigInter {α β : Type} (X : β → Set α) : Set α := fun a => ∀ b, a ∈ X b 
 
 def PowerSet {α : Type} (X : Set α) : Set (Set α) := fun Y => Y ⊆ X
+
+def Prod {α β : Type} (X : Set α) (Y : Set β) : Set (α × β) := fun a => X a.1 ∧ Y a.2 
 
 variable {α β : Type} 
 variable {a₁ a₂ : α}
