@@ -1,0 +1,9 @@
+{"version": 2,
+ "packages":
+ [{"url": "https://github.com/JLimperg/aesop",
+   "rev": "c9c533eb40a1b8aeee8278252aff75e9c91ed639",
+   "name": "aesop"},
+  {"url": "https://github.com/leanprover/std4",
+   "rev": "1e115e62a567147c8dff6b5968ba56874697631f",
+   "name": "std",
+   "inputRev": "main"}]}
