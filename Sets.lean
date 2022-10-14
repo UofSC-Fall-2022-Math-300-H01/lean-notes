@@ -73,6 +73,13 @@ theorem set_ext : X = Y ↔ (∀ (x:α), x ∈ X ↔ x ∈ Y) := by
     intro x 
     exact propext (h x) 
 
+section 
+set_option hygiene false 
+syntax "set_extensionality" : tactic
+macro_rules
+| `(tactic| set_extensionality ) => `(tactic| apply set_ext.mpr <;> intro x <;> constructor ) 
+end 
+
 syntax "setext" : tactic
 macro_rules
 | `(tactic| setext ) => `(tactic| apply set_ext.mpr) -- <;> intro h $(x?)? <;> constructor ) 
