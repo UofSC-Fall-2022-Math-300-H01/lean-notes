@@ -224,4 +224,18 @@ theorem dist_union_inter : X ∪ (Y ∩ Z) = (X ∪ Y) ∩ (X ∪ Z) := by
       | inl g₂ => exact Or.inl g₂ 
       | inr g₂ => exact Or.inr ⟨g₁,g₂⟩ 
 
+example (h: X = Y) : X ∪ Z = Y ∪ Z := by
+  rewrite [h]
+  rfl 
+
+theorem sub_comp_super (h : X ⊆ Y) : Yᶜ ⊆ Xᶜ := by 
+  intro (x : α) (g : x ∈ Yᶜ) (n : x ∈ X) 
+  exact g (h x n) 
+
+example (h : X ⊆ Y) : Z \ Y ⊆ Z \ X := by 
+  intro (x:α) (g : x ∈ Z \ Y)
+  have : x ∉ X := sub_comp_super h x g.right 
+  exact ⟨g.left,this⟩ 
+
+
 end Set 
